@@ -34,6 +34,7 @@ NSString * const AFIncrementalStoreContextWillFetchNewValuesForObject = @"AFIncr
 NSString * const AFIncrementalStoreContextDidFetchNewValuesForObject = @"AFIncrementalStoreContextDidFetchNewValuesForObject";
 NSString * const AFIncrementalStoreContextWillFetchNewValuesForRelationship = @"AFIncrementalStoreContextWillFetchNewValuesForRelationship";
 NSString * const AFIncrementalStoreContextDidFetchNewValuesForRelationship = @"AFIncrementalStoreContextDidFetchNewValuesForRelationship";
+NSString * const AFIncrementalStoreContextDidFailToInsertObject = @"AFIncrementalStoreContextDidFailToInsertObject";
 
 NSString * const AFIncrementalStoreRequestOperationsKey = @"AFIncrementalStoreRequestOperations";
 NSString * const AFIncrementalStoreFetchedObjectIDsKey = @"AFIncrementalStoreFetchedObjectIDs";
@@ -547,6 +548,10 @@ withAttributeAndRelationshipValuesFromManagedObject:(NSManagedObject *)managedOb
                 }
             } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
                 NSLog(@"Insert Error: %@", error);
+                NSMutableDictionary *userInfo = [NSMutableDictionary dictionary];
+                [userInfo setObject:error forKey:@"error"];
+                [userInfo setObject:insertedObject forKey:@"object"];
+                [[NSNotificationCenter defaultCenter] postNotificationName: AFIncrementalStoreContextDidFailToInsertObject object:context userInfo:userInfo];
             }];
             
             [mutableOperations addObject:operation];

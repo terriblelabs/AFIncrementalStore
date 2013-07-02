@@ -373,6 +373,14 @@ extern NSString * const AFIncrementalStoreContextDidFetchNewValuesForRelationshi
 //------------------------------------------------------------------------------
 
 /**
+ Posted after an HTTP request operation fails to insert an object
+ The object is the managed object context of the request.
+ The notification `userInfo` contains a hash containing the error and the managed object that failed to insert.
+ */
+
+extern NSString * const AFIncrementalStoreContextDidFailToInsertObject;
+
+/**
  A key in the `userInfo` dictionary in a `AFIncrementalStoreContextWillFetchRemoteValues` or `AFIncrementalStoreContextDidFetchRemoteValues` as well as `AFIncrementalStoreContextWillSaveRemoteValues` or `AFIncrementalStoreContextDidSaveRemoteValues` notifications.
  The corresponding value is an `NSArray` of `AFHTTPRequestOperation` objects corresponding to the request operations triggered by the fetch or save changes request. 
  */
